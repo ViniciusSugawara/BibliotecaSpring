@@ -11,6 +11,7 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID;
     private String nome;
+    @ManyToMany(mappedBy = "autor")
     private Set<Livro> livros;
 
     public String getNome() {
