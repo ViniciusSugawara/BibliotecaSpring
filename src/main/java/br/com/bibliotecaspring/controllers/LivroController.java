@@ -1,7 +1,7 @@
-package br.com.controllers;
+package br.com.bibliotecaspring.controllers;
 
-import br.com.repositorios.LivroRepositorio;
-import org.springframework.stereotype.Controller;
+import br.com.bibliotecaspring.repositorios.LivroRepositorio;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class LivroController {

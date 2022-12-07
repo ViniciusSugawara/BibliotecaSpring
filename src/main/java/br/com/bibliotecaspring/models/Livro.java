@@ -12,7 +12,10 @@ public class Livro {
     private Long Id;
     private String nome;
     private String isbn;
-    private Autor autor;
+    @ManyToMany
+    @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "livro_id"),
+                                        inverseJoinColumns = @JoinColumn(name = "autor_id   "))
+    private Set<Autor> autor;
 
     public String getNome() {
         return nome;
@@ -30,11 +33,11 @@ public class Livro {
         this.isbn = isbn;
     }
 
-    public Autor getAutor() {
+    public Set<Autor> getAutor() {
         return autor;
     }
 
-    public void setAutor(Autor autor) {
+    public void setAutor(Set<Autor> autor) {
         this.autor = autor;
     }
 

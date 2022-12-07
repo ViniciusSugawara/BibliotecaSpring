@@ -1,4 +1,4 @@
-package br.com.repositorios;
+package br.com.bibliotecaspring.repositorios;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;

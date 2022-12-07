@@ -1,4 +1,4 @@
-package br.com.servicos;
+package br.com.bibliotecaspring.servicos;
 
 import java.util.List;
 

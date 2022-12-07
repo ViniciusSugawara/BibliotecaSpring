@@ -1,7 +1,7 @@
-package br.com.servicos;
+package br.com.bibliotecaspring.servicos;
 
-import br.com.models.Livro;
-import br.com.repositorios.LivroRepositorio;
+import br.com.bibliotecaspring.models.Livro;
+import br.com.bibliotecaspring.repositorios.LivroRepositorio;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
