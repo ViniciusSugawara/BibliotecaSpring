@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+@Qualifier("AutorRepo")
 public interface AutorRepositorio extends RepositorioBase<Autor, Long> {
     List<Livro> findAllLivros();
 }

@@ -3,14 +3,16 @@ package br.com.bibliotecaspring.servicos;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.LivroRepositorio;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Qualifier("Livro")
+@Service
 public class LivroServico implements CrudServico<Livro, Long> {
     private LivroRepositorio livroRepositorio;
 
-    public LivroServico(LivroRepositorio livroRepositorio){
+    public LivroServico(@Qualifier("LivroRepo") LivroRepositorio livroRepositorio){
         this.livroRepositorio = livroRepositorio;
     }
     @Override

@@ -1,9 +1,10 @@
 package br.com.bibliotecaspring.repositorios;
 
-import br.com.models.Livro;
-import org.springframework.data.repository.CrudRepository;
+import br.com.bibliotecaspring.models.Livro;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
+@Repository
+@Qualifier("LivroRepo")
 public interface LivroRepositorio extends RepositorioBase<Livro, Long> {
 }
