@@ -1,16 +1,19 @@
-package br.com.servicos;
+package br.com.bibliotecaspring.servicos;
 
-import br.com.models.Autor;
-import br.com.models.Livro;
-import br.com.repositorios.AutorRepositorio;
+import br.com.bibliotecaspring.models.Autor;
+import br.com.bibliotecaspring.models.Livro;
+import br.com.bibliotecaspring.repositorios.AutorRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Qualifier("Autor")
+@Service
 public class AutorServico implements CrudServico<Autor, Long> {
     private AutorRepositorio autorRepositorio;
-    public AutorServico(AutorRepositorio autorRepositorio){
+    public AutorServico(@Qualifier("AutorRepo") AutorRepositorio autorRepositorio){
         this.autorRepositorio = autorRepositorio;
     }
     @Override
