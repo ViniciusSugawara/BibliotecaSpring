@@ -20,7 +20,7 @@ public class LivroServico implements CrudServico<Livro, Long> {
 
     @Override
     public Livro findById(Long id) {
-        return livroRepositorio.findById(id).orElse(null);
+        return livroRepositorio.findById(id);
     }
 
     @Override
