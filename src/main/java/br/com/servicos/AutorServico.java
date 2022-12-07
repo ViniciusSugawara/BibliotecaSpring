@@ -1,6 +1,7 @@
 package br.com.servicos;
 
 import br.com.models.Autor;
+import br.com.models.Livro;
 import br.com.repositorios.AutorRepositorio;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -19,8 +20,9 @@ public class AutorServico implements CrudServico<Autor, Long> {
 
     @Override
     public Autor findById(Long id) {
-        return autorRepositorio.findById(id).orElse(null);
+        return autorRepositorio.findById(id);
     }
+    public List<Livro> findAllLivros(){ return autorRepositorio.findAllLivros(); }
 
     @Override
     public void save(Autor object) {
