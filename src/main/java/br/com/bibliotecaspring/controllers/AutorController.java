@@ -41,5 +41,16 @@ public class AutorController {
     public void save(Autor object){
         this.autorServico.save(object);
     }
+    @RequestMapping("/delete")
+    @DeleteMapping
+    public void delete(Autor object){
+        this.autorServico.delete(object);
+    }
+
+    @RequestMapping("/deleteById")
+    @DeleteMapping
+    public void deleteById(Long id){
+        this.autorServico.deleteById(id);
+    }
 
 }
