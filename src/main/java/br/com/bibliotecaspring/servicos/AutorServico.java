@@ -19,7 +19,7 @@ public class AutorServico {
         return autorRepositorio.findAll();
     }
     public Autor findById(Long id) {
-        return autorRepositorio.findById(id);
+        return autorRepositorio.findById(id).orElse(null);
     }
 
     public void save(Autor object) {
