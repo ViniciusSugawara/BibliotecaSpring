@@ -5,7 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LivroController {
-    private LivroRepositorio livroRepositorio;
+    private LivroServico livroServico;
+
+    public LivroController(LivroServico livroServico){
+        this.livroServico = livroServico;
+    }
 
     public LivroController(LivroRepositorio livroRepositorio){
         this.livroRepositorio = livroRepositorio;
