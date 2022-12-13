@@ -1,14 +1,7 @@
 package br.com.bibliotecaspring.repositorios;
 
 import br.com.bibliotecaspring.models.Autor;
-import br.com.bibliotecaspring.models.Livro;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-@Repository
-@Qualifier("AutorRepo")
-public interface AutorRepositorio extends RepositorioBase<Autor, Long> {
-    List<Livro> findAllLivros();
+public interface AutorRepositorio extends JpaRepository<Autor, Long> {
 }
