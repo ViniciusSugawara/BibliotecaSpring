@@ -1,11 +1,10 @@
-package br.com.models;
+package br.com.bibliotecaspring.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Livro {
@@ -14,7 +13,10 @@ public class Livro {
     private Long Id;
     private String nome;
     private String isbn;
-    private Autor autor;
+    @ManyToMany
+    @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "livro_id"),
+                                        inverseJoinColumns = @JoinColumn(name = "autor_id"))
+    private Set<Autor> autor = new HashSet<>();
 
     public String getNome() {
         return nome;
@@ -32,11 +34,11 @@ public class Livro {
         this.isbn = isbn;
     }
 
-    public Autor getAutor() {
+    public Set<Autor> getAutor() {
         return autor;
     }
 
-    public void setAutor(Autor autor) {
+    public void setAutor(Set<Autor> autor) {
         this.autor = autor;
     }
 
@@ -50,7 +52,7 @@ public class Livro {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, nome, isbn, autor);
+        return Objects.hash(Id);
     }
 
     @Override

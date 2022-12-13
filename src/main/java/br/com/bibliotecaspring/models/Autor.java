@@ -1,10 +1,8 @@
-package br.com.models;
+package br.com.bibliotecaspring.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,10 +10,16 @@ import java.util.Set;
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ID;
+    private Long id;
     private String nome;
-    private Set<Livro> livros;
+    @ManyToMany
+    @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "autor_id"),
+            inverseJoinColumns = @JoinColumn(name = "livro_id"))
+    private Set<Livro> livros = new HashSet<>();
 
+    public Long getId(){
+        return this.id;
+    }
     public String getNome() {
         return nome;
     }
@@ -37,18 +41,18 @@ public class Autor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Autor autor = (Autor) o;
-        return Objects.equals(ID, autor.ID) && Objects.equals(nome, autor.nome) && Objects.equals(livros, autor.livros);
+        return Objects.equals(id, autor.id) && Objects.equals(nome, autor.nome) && Objects.equals(livros, autor.livros);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, nome, livros);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Autor{" +
-                "ID=" + ID +
+                "ID=" + id +
                 ", nome='" + nome + '\'' +
                 ", livros=" + livros +
                 '}';
