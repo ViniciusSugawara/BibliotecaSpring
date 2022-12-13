@@ -21,7 +21,7 @@ public class LivroServico {
     }
 
     public Livro findById(Long id) {
-        return livroRepositorio.findById(id);
+        return livroRepositorio.findById(id).orElse(null);
     }
 
     public void save(Livro object) {
