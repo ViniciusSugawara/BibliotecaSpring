@@ -13,10 +13,9 @@ import java.util.List;
 @RestController
 @Qualifier("AutorController")
 public class AutorController {
+    private AutorServico autorServico;
 
-    private CrudServico autorServico;
-
-    public AutorController(@Qualifier("Autor") CrudServico autorServico){
+    public AutorController(AutorServico autorServico){
         this.autorServico = autorServico;
     }
 
