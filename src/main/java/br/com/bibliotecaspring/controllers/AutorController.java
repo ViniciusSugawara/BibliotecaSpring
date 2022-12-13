@@ -1,17 +1,13 @@
 package br.com.bibliotecaspring.controllers;
 
 import br.com.bibliotecaspring.models.Autor;
-import br.com.bibliotecaspring.servicos.CrudServico;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.bibliotecaspring.servicos.AutorServico;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@Qualifier("AutorController")
+@RequestMapping("/autor")
 public class AutorController {
     private AutorServico autorServico;
 
@@ -19,12 +15,20 @@ public class AutorController {
         this.autorServico = autorServico;
     }
 
-    @RequestMapping({"/achaAutores"})
+
+    @RequestMapping("/index")
+    @GetMapping
+    public List<Autor> findAll(){
+        return autorServico.findAll();
+    }
+
+    @RequestMapping({"/findById"})
+    @GetMapping
     public Autor findById(Long id){
         return (Autor) autorServico.findById(id);
     }
 
-    @RequestMapping("/testeApi")
+    @RequestMapping("/returnMock")
     @GetMapping
     public Autor retornaAutor(){
         Autor autorMock = new Autor();
@@ -32,12 +36,7 @@ public class AutorController {
         return autorMock;
     }
 
-    @RequestMapping("/achaTodos")
-    public List<Autor> findAll(){
-        return (List<Autor>) autorServico.findAll();
-    }
-
-    @RequestMapping("/insereAutor")
+    @RequestMapping("/store")
     @PostMapping
     public void save(Autor object){
         this.autorServico.save(object);
