@@ -25,7 +25,7 @@ public class AutorController {
     @RequestMapping({"/findById"})
     @GetMapping
     public Autor findById(Long id){
-        return (Autor) autorServico.findById(id);
+        return autorServico.findById(id);
     }
 
     @RequestMapping("/returnMock")
