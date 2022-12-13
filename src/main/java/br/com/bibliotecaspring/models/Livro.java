@@ -2,6 +2,7 @@ package br.com.bibliotecaspring.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,8 +15,8 @@ public class Livro {
     private String isbn;
     @ManyToMany
     @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "livro_id"),
-                                        inverseJoinColumns = @JoinColumn(name = "autor_id   "))
-    private Set<Autor> autor;
+                                        inverseJoinColumns = @JoinColumn(name = "autor_id"))
+    private Set<Autor> autor = new HashSet<>();
 
     public String getNome() {
         return nome;
@@ -51,7 +52,7 @@ public class Livro {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, nome, isbn, autor);
+        return Objects.hash(Id);
     }
 
     @Override
