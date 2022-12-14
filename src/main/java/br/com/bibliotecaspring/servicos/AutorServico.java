@@ -32,6 +32,15 @@ public class AutorServico {
         return filterAutor(autorRepositorio.findById(id).orElse(null));
     }
 
+    public Set<Livro> findAllLivrosById(Long id){
+        Autor autor = autorRepositorio.findById(id).orElse(null);
+        Set<Livro> livrosFiltrados = new HashSet<>();
+        for(Livro livro : autor.getLivros()){
+            livrosFiltrados.add(filterSetLivros(livro));
+        }
+        return livrosFiltrados;
+    }
+
     public void save(Autor object) {
         autorRepositorio.save(object);
     }
