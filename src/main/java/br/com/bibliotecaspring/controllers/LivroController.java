@@ -41,6 +41,10 @@ public class LivroController {
     public void save(@RequestBody Livro object){
         this.livroServico.save(object);
     }
+    @PutMapping("/update")
+    public void update(@RequestBody LivroDTO object){
+        this.livroServico.update(object);
+    }
     @RequestMapping("/delete")
     @DeleteMapping
     public void delete(@RequestBody Livro object){
