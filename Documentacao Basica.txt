@@ -1,66 +1,55 @@
 Descrição das classes - BibliotecaSpring
-	Pacote Model: Contém classes POJO, que representam entidades.
-	AutorModelo: Representa os autores, com nome e um conjunto de livros os quais são responsáveis.
-	LivroModelo: Representa os livros, que contém nome, ISBN e o autor que o publicou.
+	Pacote Models: Contém classes POJO, que representam entidades.
+	Autor: Representa os autores, com nome e um conjunto de livros de autoria.
+	Livro: Representa os livros, que contém nome, ISBN e um conjunto de autores.
 	
-	Pacote Controller: Contém classes que manipulam os Models.
-	AutorController: Realiza ações que manipulam os dados do autor
-	LivroController: Realiza ações que manipulam os dados do livro.
+	Pacote Controllers: Contém classes responsáveis pelo mapeamento da API
+	AutorController: Possui o mapeamento de requisições Get, Post, Put e Delete, com relação ao Autor.
+	LivroController: Possui o mapeamento de requisições Get, Post, Put e Delete, com relação ao Livro.
+
+	Pacote Dataloader: Contém uma classe para inicialização de dados.
+	BootStrap: Inicializa o banco com alguns autores e livros pré definidos.
+
+	Pacote Dto: Contém classes Data Transfer Object, responsáveis apenas por terem dados nelas.
+	AutorDTO: Representação do modelo Autor
+	LivroDTO: Representação do modelo Livro
 	
-	Pacote Repositorios: Contém serviços responsáveis por enviar dados para a database.
-	AutorRepository: implementa a interface CrudRepository, permitindo comandos que criam, atualizam, consultam e deletam autores.
-	LivroRepository: implementa a interface CrudRepository, permitindo comandos que criam, atualizam, consultam e deletam livros.
-	
-	Pacote UI: Contém classes que demonstram uma interface gráfica / de texto para o usuário.
-	Sistema: Demonstra as informações através de outros métodos de classes.
-	AutorView: Demonstra informações formatadas referentes aos autores
-	LivroView: Demonstra informações formatadas referentes aos livros.
-	
-	Pacote BootStrap: Contém uma classe para inicialização de dados.
-	BootStrap: Inicializa o banco com alguns dados pré definidos.
-	
+	Pacote Repositorios: Contém repositórios para comunicação com a database.
+	AutorRepositorio: implementa a interface JpaRepository, permitindo comandos que criam, atualizam, consultam e deletam autores.
+	LivroRepositorio: implementa a interface JpaRepository, permitindo comandos que criam, atualizam, consultam e deletam livros.
+
+	Pacote Serviços: Contém classes de serviço que chamam os repositórios e contém todas as regras necessárias.
+	AutorServico: Classe que cuida de toda a lógica das requisições referentes ao Autor.
+	LivroServico: Classe que cuida de toda a lógica das requisições referentes ao Livro.
+
 Cardinalidades:
-	Um autor contém vários livros, podendo ser responsável pela autoria de múltiplos lançamentos
-	Um livro possui apenas um autor.
-	Autor 1 ou n : 1 Livro
+	Um autor contém vários livros,
+	Um livro contém vários autores.
+	Autor n : n Livro
 
 Requerimentos do sistema:
 	> Pede-se gerenciamento de autores (CRUD)
-	 > Método adicionarAutor();
-	 > Método atualizarAutor();
-	 > Método excluirAutor();
-	 > Método adicionarLivros();
+	 > Método adicionarAutor(); // método save
+	 > Método atualizarAutor(); // método update
+	 > Método excluirAutor(); // método delete
+	 > Método adicionarLivros(); // metodo update
 	 
 	> Pede-se gerenciamento de livros (CRUD, com autores cadastrados apenas.)
-	 > Método adicionarLivro();
-	 > Método atualizarLivro();
-	 > Método excluirLivro();
-	 > Método adicionarAutor();
+	 > Método adicionarLivro(); // método save
+	 > Método atualizarLivro(); // método update
+	 > Método excluirLivro(); // método delete
+	 > Método adicionarAutor(); // método update
 	 
-	> Método para consultar todos os autores registrados (Comando Select)
-	> Método para consultar todos os livros registrados (Comando Select)
+	> Método para consultar todos os autores registrados (Comando Select) // método findAll
+	> Método para consultar todos os livros registrados (Comando Select) // método findAll
 	> Método para consultar a partir de um autor, todos os livros do mesmo (Comando Select com Where)
 	
 Requerimentos não funcionais:
 	> Linguagem Java
 	> Framework Spring
+	> Teste de requisição Postman
 	> Database H2
-	> Github
-	
-Tarefas a serem executadas:
-	Montar diagrama de classes
-	Montar documento inicial
-	Definir relações entre as entidades
-	Montar descrição das classes
-	Montar casos de uso
-	
-	Estudar sobre API RESTful
-	Estudar sobre OpenAPI
-	Estudar sobre requisição em JSON
-	Estudar sobre Postman
-	Estudar sobre Spring
-	
-	Iniciar Código
-	Montar protótipos de interfaces gráficas (Não é necessário por retornar arquivos JSON)
+	> Controle de versão Github
+
 	
 	
