@@ -1,5 +1,6 @@
 package br.com.bibliotecaspring.servicos;
 
+import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.LivroRepositorio;
@@ -20,35 +21,17 @@ public class LivroServico {
         this.livroRepositorio = livroRepositorio;
     }
 
-    public List<Livro> findAll() {
-        List<Livro> listaFiltrada = new ArrayList<>();
+    public List<LivroDTO> findAll() {
+        List<LivroDTO> listaFiltrada = new ArrayList<>();
         for(Livro livro : livroRepositorio.findAll()){
             listaFiltrada.add(filterLivro(livro));
         }
         return listaFiltrada;
     }
-    private Livro filterLivro(Livro livro){
-        Livro prototipo = new Livro();
-        Set<Autor> autoresFiltrados = new HashSet<>();
-        prototipo.setId(livro.getId());
-        prototipo.setIsbn(livro.getIsbn());
-        prototipo.setNome(livro.getNome());
 
-        for(Autor autor : livro.getAutor()){
-            autoresFiltrados.add(autor);
-        }
-        prototipo.setAutor(autoresFiltrados);
-        return prototipo;
-    }
-    private Autor filterSetAutores(Autor autor){
-        Autor autorPrototipo = new Autor();
-        autorPrototipo.setId(autor.getId());
-        autorPrototipo.setNome(autor.getNome());
-        return autorPrototipo;
-    }
 
-    public Livro findById(Long id) {
-        return livroRepositorio.findById(id).orElse(null);
+    public LivroDTO findById(Long id) {
+        return filterLivro(livroRepositorio.findById(id).orElse(null));
     }
 
     public void save(Livro object) {
