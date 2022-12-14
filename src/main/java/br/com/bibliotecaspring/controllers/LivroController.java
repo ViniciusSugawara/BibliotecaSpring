@@ -1,5 +1,6 @@
 package br.com.bibliotecaspring.controllers;
 
+import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.LivroServico;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,13 @@ public class LivroController {
 
     @RequestMapping("/index")
     @GetMapping
-    public List<Livro> findAll(){
+    public List<LivroDTO> findAll(){
         return livroServico.findAll();
     }
 
     @RequestMapping({"/findById"})
     @GetMapping
-    public Livro findById(Long id){
+    public LivroDTO findById(@PathVariable("id") Long id){
         return livroServico.findById(id);
     }
 
