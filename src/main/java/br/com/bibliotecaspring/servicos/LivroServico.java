@@ -47,9 +47,14 @@ public class LivroServico {
         livroRepositorio.deleteById(id);
     }
 
-    public void updateById(Long id, Livro object) {
-        Livro livro = findById(id);
-        livro = object;
+    public void update(LivroDTO object) {
+        Livro livro = new Livro();
+
+        livro.setId(object.getId());
+        livro.setNome(object.getNome());
+        livro.setIsbn(object.getIsbn());
+        livro.setAutores(object.getAutores());
+
         livroRepositorio.save(livro);
     }
 }
