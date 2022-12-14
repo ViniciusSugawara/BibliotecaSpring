@@ -6,7 +6,10 @@ import br.com.bibliotecaspring.repositorios.AutorRepositorio;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Qualifier("Autor")
 @Service
@@ -16,7 +19,32 @@ public class AutorServico {
         this.autorRepositorio = autorRepositorio;
     }
     public List<Autor> findAll() {
-        return autorRepositorio.findAll();
+        List<Autor> listaFiltrada = new ArrayList<>();
+        for(Autor autor : autorRepositorio.findAll()){
+            listaFiltrada.add(filterAutor(autor));
+        }
+        return listaFiltrada;
+    }
+    private Autor filterAutor(Autor autor){
+        Set<Livro> livrosFiltrados = new HashSet<>();
+        Autor prototipo = new Autor();
+        prototipo.setId(autor.getId());
+        prototipo.setNome(autor.getNome());
+
+        for(Livro livro : autor.getLivros()){
+            livrosFiltrados.add(filterSetLivros(livro));
+        }
+        prototipo.setLivros(livrosFiltrados);
+        return prototipo;
+    }
+    // Metodo criado para que nao seja retornado um conjunto redundante de autor, que eh lido dentro do JSON
+    // causando erro de stack overflow.
+    private Livro filterSetLivros(Livro livro){
+        Livro livroPrototipo = new Livro();
+        livroPrototipo.setId(livro.getId());
+        livroPrototipo.setNome(livro.getNome());
+        livroPrototipo.setIsbn(livro.getIsbn());
+        return livroPrototipo;
     }
     public Autor findById(Long id) {
         return autorRepositorio.findById(id).orElse(null);

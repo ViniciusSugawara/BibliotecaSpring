@@ -18,6 +18,14 @@ public class Livro {
                                         inverseJoinColumns = @JoinColumn(name = "autor_id"))
     private Set<Autor> autor = new HashSet<>();
 
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
     public String getNome() {
         return nome;
     }

@@ -17,6 +17,9 @@ public class Autor {
             inverseJoinColumns = @JoinColumn(name = "livro_id"))
     private Set<Livro> livros = new HashSet<>();
 
+    public void setId(Long id){
+        this.id = id;
+    }
     public Long getId(){
         return this.id;
     }
