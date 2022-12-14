@@ -57,4 +57,24 @@ public class LivroServico {
 
         livroRepositorio.save(livro);
     }
+
+    private LivroDTO filterLivro(Livro livro){
+        Set<Autor> autoresFiltrados = new HashSet<>();
+        LivroDTO livroDTO = new LivroDTO();
+        livroDTO.setId(livro.getId());
+        livroDTO.setIsbn(livro.getIsbn());
+        livroDTO.setNome(livro.getNome());
+
+        for(Autor autor : livro.getAutores()){
+            autoresFiltrados.add(filterSetAutores(autor));
+        }
+        livroDTO.setAutores(autoresFiltrados);
+        return livroDTO;
+    }
+    private Autor filterSetAutores(Autor autor){
+        Autor autorPrototipo = new Autor();
+        autorPrototipo.setId(autor.getId());
+        autorPrototipo.setNome(autor.getNome());
+        return autorPrototipo;
+    }
 }
