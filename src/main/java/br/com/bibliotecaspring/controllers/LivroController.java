@@ -22,7 +22,7 @@ public class LivroController {
         return livroServico.findAll();
     }
 
-    @RequestMapping({"/findById"})
+    @RequestMapping({"/index/{id}"})
     @GetMapping
     public LivroDTO findById(@PathVariable("id") Long id){
         return livroServico.findById(id);
@@ -38,18 +38,18 @@ public class LivroController {
 
     @RequestMapping("/store")
     @PostMapping
-    public void save(Livro object){
+    public void save(@RequestBody Livro object){
         this.livroServico.save(object);
     }
     @RequestMapping("/delete")
     @DeleteMapping
-    public void delete(Livro object){
+    public void delete(@RequestBody Livro object){
         this.livroServico.delete(object);
     }
 
-    @RequestMapping("/deleteById")
+    @RequestMapping("/delete/{id}")
     @DeleteMapping
-    public void deleteById(Long id){
+    public void deleteById(@PathVariable("id") Long id){
         this.livroServico.deleteById(id);
     }
 }
