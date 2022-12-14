@@ -47,9 +47,13 @@ public class AutorServico {
     }
 
 
-    public void updateById(Long id, Autor object) {
-        Autor autor = this.findById(id);
-        autor = object;
+    public void update(AutorDTO object) {
+        Autor autor = new Autor();
+
+        autor.setId(object.getId());
+        autor.setNome(object.getNome());
+        autor.setLivros(object.getLivros());
+
         autorRepositorio.save(autor);
     }
 }
