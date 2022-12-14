@@ -1,5 +1,6 @@
 package br.com.bibliotecaspring.controllers;
 
+import br.com.bibliotecaspring.dto.AutorDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.servicos.AutorServico;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class AutorController {
 
     @RequestMapping("/index")
     @GetMapping
-    public List<Autor> findAll(){
+    public List<AutorDTO> findAll(){
         return autorServico.findAll();
     }
 
     @RequestMapping({"/findById"})
     @GetMapping
-    public Autor findById(Long id){
+    public AutorDTO findById(@PathVariable("id") Long id){
         return autorServico.findById(id);
     }
 
