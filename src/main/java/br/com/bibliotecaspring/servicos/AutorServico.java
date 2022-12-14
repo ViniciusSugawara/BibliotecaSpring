@@ -56,4 +56,26 @@ public class AutorServico {
 
         autorRepositorio.save(autor);
     }
+
+    private AutorDTO filterAutor(Autor autor){
+        Set<Livro> livrosFiltrados = new HashSet<>();
+        AutorDTO autorDTO = new AutorDTO();
+        autorDTO.setId(autor.getId());
+        autorDTO.setNome(autor.getNome());
+
+        for(Livro livro : autor.getLivros()){
+            livrosFiltrados.add(filterSetLivros(livro));
+        }
+        autorDTO.setLivros(livrosFiltrados);
+        return autorDTO;
+    }
+    // Metodo criado para que nao seja retornado um conjunto redundante de autor, que eh lido dentro do JSON
+    // causando erro de stack overflow.
+    private Livro filterSetLivros(Livro livro){
+        Livro livroPrototipo = new Livro();
+        livroPrototipo.setId(livro.getId());
+        livroPrototipo.setNome(livro.getNome());
+        livroPrototipo.setIsbn(livro.getIsbn());
+        return livroPrototipo;
+    }
 }
