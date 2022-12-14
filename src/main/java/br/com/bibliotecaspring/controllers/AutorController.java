@@ -23,7 +23,7 @@ public class AutorController {
         return autorServico.findAll();
     }
 
-    @RequestMapping({"/findById"})
+    @RequestMapping({"/index/{id}"})
     @GetMapping
     public AutorDTO findById(@PathVariable("id") Long id){
         return autorServico.findById(id);
@@ -39,7 +39,7 @@ public class AutorController {
 
     @RequestMapping("/store")
     @PostMapping
-    public void save(Autor object){
+    public void save(@RequestBody Autor object){
         this.autorServico.save(object);
     }
     @RequestMapping("/delete")
@@ -48,9 +48,9 @@ public class AutorController {
         this.autorServico.delete(object);
     }
 
-    @RequestMapping("/deleteById")
+    @RequestMapping("/delete/{id}")
     @DeleteMapping
-    public void deleteById(Long id){
+    public void deleteById(@PathVariable("id") Long id){
         this.autorServico.deleteById(id);
     }
 
