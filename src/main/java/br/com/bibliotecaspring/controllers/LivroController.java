@@ -1,5 +1,6 @@
 package br.com.bibliotecaspring.controllers;
 
+import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.LivroServico;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,13 @@ public class LivroController {
 
     @RequestMapping("/index")
     @GetMapping
-    public List<Livro> findAll(){
+    public List<LivroDTO> findAll(){
         return livroServico.findAll();
     }
 
-    @RequestMapping({"/findById"})
+    @RequestMapping({"/index/{id}"})
     @GetMapping
-    public Livro findById(Long id){
+    public LivroDTO findById(@PathVariable("id") Long id){
         return livroServico.findById(id);
     }
 
@@ -37,18 +38,22 @@ public class LivroController {
 
     @RequestMapping("/store")
     @PostMapping
-    public void save(Livro object){
+    public void save(@RequestBody Livro object){
         this.livroServico.save(object);
+    }
+    @PutMapping("/update")
+    public void update(@RequestBody LivroDTO object){
+        this.livroServico.update(object);
     }
     @RequestMapping("/delete")
     @DeleteMapping
-    public void delete(Livro object){
+    public void delete(@RequestBody Livro object){
         this.livroServico.delete(object);
     }
 
-    @RequestMapping("/deleteById")
+    @RequestMapping("/delete/{id}")
     @DeleteMapping
-    public void deleteById(Long id){
+    public void deleteById(@PathVariable("id") Long id){
         this.livroServico.deleteById(id);
     }
 }

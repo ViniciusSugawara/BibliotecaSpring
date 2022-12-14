@@ -16,7 +16,7 @@ public class Livro {
     @ManyToMany
     @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "livro_id"),
                                         inverseJoinColumns = @JoinColumn(name = "autor_id"))
-    private Set<Autor> autor = new HashSet<>();
+    private Set<Autor> autores = new HashSet<>();
 
     public Long getId() {
         return Id;
@@ -42,12 +42,12 @@ public class Livro {
         this.isbn = isbn;
     }
 
-    public Set<Autor> getAutor() {
-        return autor;
+    public Set<Autor> getAutores() {
+        return autores;
     }
 
-    public void setAutor(Set<Autor> autor) {
-        this.autor = autor;
+    public void setAutores(Set<Autor> autor) {
+        this.autores = autor;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Livro {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Livro livro = (Livro) o;
-        return Objects.equals(Id, livro.Id) && Objects.equals(nome, livro.nome) && Objects.equals(isbn, livro.isbn) && Objects.equals(autor, livro.autor);
+        return Objects.equals(Id, livro.Id) && Objects.equals(nome, livro.nome) && Objects.equals(isbn, livro.isbn) && Objects.equals(autores, livro.autores);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Livro {
                 "Id=" + Id +
                 ", nome='" + nome + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", autor=" + autor +
+                ", autor=" + autores +
                 '}';
     }
 }

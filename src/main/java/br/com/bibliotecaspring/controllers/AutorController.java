@@ -1,5 +1,6 @@
 package br.com.bibliotecaspring.controllers;
 
+import br.com.bibliotecaspring.dto.AutorDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.servicos.AutorServico;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class AutorController {
 
     @RequestMapping("/index")
     @GetMapping
-    public List<Autor> findAll(){
+    public List<AutorDTO> findAll(){
         return autorServico.findAll();
     }
 
-    @RequestMapping({"/findById"})
+    @RequestMapping({"/index/{id}"})
     @GetMapping
-    public Autor findById(Long id){
+    public AutorDTO findById(@PathVariable("id") Long id){
         return autorServico.findById(id);
     }
 
@@ -38,18 +39,23 @@ public class AutorController {
 
     @RequestMapping("/store")
     @PostMapping
-    public void save(Autor object){
+    public void save(@RequestBody Autor object){
         this.autorServico.save(object);
     }
-    @RequestMapping("/delete")
-    @DeleteMapping
-    public void delete(Autor object){
+
+    @PutMapping("/update")
+    public void update(@RequestBody AutorDTO object) {
+        this.autorServico.update(object);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody Autor object){
         this.autorServico.delete(object);
     }
 
-    @RequestMapping("/deleteById")
+    @RequestMapping("/delete/{id}")
     @DeleteMapping
-    public void deleteById(Long id){
+    public void deleteById(@PathVariable("id") Long id){
         this.autorServico.deleteById(id);
     }
 
