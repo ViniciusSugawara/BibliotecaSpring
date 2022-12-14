@@ -42,9 +42,14 @@ public class AutorController {
     public void save(@RequestBody Autor object){
         this.autorServico.save(object);
     }
-    @RequestMapping("/delete")
-    @DeleteMapping
-    public void delete(Autor object){
+
+    @PutMapping("/update")
+    public void update(@RequestBody AutorDTO object) {
+        this.autorServico.update(object);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody Autor object){
         this.autorServico.delete(object);
     }
 
