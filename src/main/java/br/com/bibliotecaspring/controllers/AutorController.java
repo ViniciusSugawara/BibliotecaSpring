@@ -37,7 +37,7 @@ public class AutorController {
     }
 
     @PostMapping("/autor")
-    public void save(@RequestBody Autor object){
+    public void save(@RequestBody AutorDTO object){
         this.autorServico.save(object);
     }
 
@@ -47,7 +47,7 @@ public class AutorController {
     }
 
     @DeleteMapping("/autor")
-    public void delete(@RequestBody Autor object){
+    public void delete(@RequestBody AutorDTO object){
         this.autorServico.delete(object);
     }
 
