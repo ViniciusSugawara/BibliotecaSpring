@@ -5,6 +5,7 @@ import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.AutorRepositorio;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -41,13 +42,19 @@ public class AutorServico {
         return livrosFiltrados;
     }
 
-    public void save(Autor object) {
-        autorRepositorio.save(object);
+    public void save(AutorDTO object) {
+        Autor autor = new Autor();
+        BeanUtils.copyProperties(object, autor);
+
+        autorRepositorio.save(autor);
     }
 
 
-    public void delete(Autor object) {
-        autorRepositorio.delete(object);
+    public void delete(AutorDTO object) {
+        Autor autor = new Autor();
+        BeanUtils.copyProperties(object, autor);
+
+        autorRepositorio.delete(autor);
     }
 
 
@@ -68,9 +75,7 @@ public class AutorServico {
 
     private AutorDTO filterAutor(Autor autor){
         Set<Livro> livrosFiltrados = new HashSet<>();
-        AutorDTO autorDTO = new AutorDTO();
-        autorDTO.setId(autor.getId());
-        autorDTO.setNome(autor.getNome());
+        AutorDTO autorDTO = new AutorDTO(autor.getId(), autor.getNome());
 
         for(Livro livro : autor.getLivros()){
             livrosFiltrados.add(filterSetLivros(livro));
