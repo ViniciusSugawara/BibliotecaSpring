@@ -33,7 +33,7 @@ public class LivroController {
     }
 
     @PostMapping("/livro")
-    public void save(@RequestBody Livro object){
+    public void save(@RequestBody LivroDTO object){
         this.livroServico.save(object);
     }
     @PutMapping("/livro")
@@ -42,7 +42,7 @@ public class LivroController {
     }
 
     @DeleteMapping("/livro")
-    public void delete(@RequestBody Livro object){
+    public void delete(@RequestBody LivroDTO object){
         this.livroServico.delete(object);
     }
 
