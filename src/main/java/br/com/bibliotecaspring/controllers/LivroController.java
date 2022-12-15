@@ -3,6 +3,8 @@ package br.com.bibliotecaspring.controllers;
 import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.LivroServico;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,13 +18,13 @@ public class LivroController {
     }
 
     @GetMapping("/livros")
-    public List<LivroDTO> findAll(){
-        return livroServico.findAll();
+    public ResponseEntity<List<LivroDTO>> findAll(){
+        return new ResponseEntity<>(livroServico.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/livro/{id}")
-    public LivroDTO findById(@PathVariable("id") Long id){
-        return livroServico.findById(id);
+    public ResponseEntity<LivroDTO> findById(@PathVariable("id") Long id){
+        return new ResponseEntity(livroServico.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/livro/returnMock")
@@ -33,21 +35,25 @@ public class LivroController {
     }
 
     @PostMapping("/livro")
-    public void save(@RequestBody LivroDTO object){
+    public ResponseEntity<LivroDTO> save(@RequestBody LivroDTO object){
         this.livroServico.save(object);
+        return new ResponseEntity<>(object, HttpStatus.CREATED);
     }
     @PutMapping("/livro")
-    public void update(@RequestBody LivroDTO object){
+    public ResponseEntity<LivroDTO> update(@RequestBody LivroDTO object){
         this.livroServico.update(object);
+        return new ResponseEntity<>(object, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/livro")
-    public void delete(@RequestBody LivroDTO object){
+    public ResponseEntity delete(@RequestBody LivroDTO object){
         this.livroServico.delete(object);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/livro/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public ResponseEntity deleteById(@PathVariable("id") Long id){
         this.livroServico.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
