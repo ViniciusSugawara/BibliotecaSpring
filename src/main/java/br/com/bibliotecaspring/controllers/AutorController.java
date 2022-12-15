@@ -4,6 +4,8 @@ import br.com.bibliotecaspring.dto.AutorDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.AutorServico;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +20,13 @@ public class AutorController {
     }
 
     @GetMapping("/autores")
-    public List<AutorDTO> findAll(){
-        return autorServico.findAll();
+    public ResponseEntity<List<AutorDTO>> findAll(){
+        return new ResponseEntity<>(autorServico.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/autor/{id}")
-    public AutorDTO findById(@PathVariable("id") Long id){
-        return autorServico.findById(id);
+    public ResponseEntity<AutorDTO> findById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(autorServico.findById(id), HttpStatus.OK);
     }
     @GetMapping("/autor/{id}/livros")
     public Set<Livro> findAllLivrosById(@PathVariable("id") Long id){ return autorServico.findAllLivrosById(id);}
@@ -37,23 +39,27 @@ public class AutorController {
     }
 
     @PostMapping("/autor")
-    public void save(@RequestBody AutorDTO object){
+    public ResponseEntity<AutorDTO> save(@RequestBody AutorDTO object){
         this.autorServico.save(object);
+        return new ResponseEntity<>(object, HttpStatus.CREATED);
     }
 
     @PutMapping("/autor")
-    public void update(@RequestBody AutorDTO object) {
+    public ResponseEntity<AutorDTO> update(@RequestBody AutorDTO object) {
         this.autorServico.update(object);
+        return new ResponseEntity<>(object,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/autor")
-    public void delete(@RequestBody AutorDTO object){
+    public ResponseEntity delete(@RequestBody AutorDTO object){
         this.autorServico.delete(object);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/autor/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public ResponseEntity deleteById(@PathVariable("id") Long id){
         this.autorServico.deleteById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

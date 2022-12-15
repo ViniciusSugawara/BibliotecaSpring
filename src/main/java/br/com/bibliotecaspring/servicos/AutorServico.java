@@ -75,7 +75,8 @@ public class AutorServico {
 
     private AutorDTO filterAutor(Autor autor){
         Set<Livro> livrosFiltrados = new HashSet<>();
-        AutorDTO autorDTO = new AutorDTO(autor.getId(), autor.getNome());
+        AutorDTO autorDTO = new AutorDTO();
+        BeanUtils.copyProperties(autor, autorDTO);
 
         for(Livro livro : autor.getLivros()){
             livrosFiltrados.add(filterSetLivros(livro));
