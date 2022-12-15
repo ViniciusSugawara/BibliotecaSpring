@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/livro")
 public class LivroController {
     private LivroServico livroServico;
 
@@ -16,43 +15,38 @@ public class LivroController {
         this.livroServico = livroServico;
     }
 
-    @RequestMapping("/index")
-    @GetMapping
+    @GetMapping("/livros")
     public List<LivroDTO> findAll(){
         return livroServico.findAll();
     }
 
-    @RequestMapping({"/index/{id}"})
-    @GetMapping
+    @GetMapping("/livro/{id}")
     public LivroDTO findById(@PathVariable("id") Long id){
         return livroServico.findById(id);
     }
 
-    @RequestMapping("/returnMock")
-    @GetMapping
+    @GetMapping("/livro/returnMock")
     public Livro retornaLivro(){
         Livro LivroMock = new Livro();
         LivroMock.setNome("AErfj9-0wossfkweo0");
         return LivroMock;
     }
 
-    @RequestMapping("/store")
-    @PostMapping
+    @PostMapping("/livro")
     public void save(@RequestBody Livro object){
         this.livroServico.save(object);
     }
-    @PutMapping("/update")
+    @PutMapping("/livro")
     public void update(@RequestBody LivroDTO object){
         this.livroServico.update(object);
     }
-    @RequestMapping("/delete")
-    @DeleteMapping
+
+    @DeleteMapping("/livro")
     public void delete(@RequestBody Livro object){
         this.livroServico.delete(object);
     }
 
-    @RequestMapping("/delete/{id}")
-    @DeleteMapping
+    @DeleteMapping("/livro/{id}")
     public void deleteById(@PathVariable("id") Long id){
         this.livroServico.deleteById(id);
     }
