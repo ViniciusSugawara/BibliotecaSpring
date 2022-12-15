@@ -4,6 +4,7 @@ import br.com.bibliotecaspring.dto.LivroDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.LivroRepositorio;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +35,17 @@ public class LivroServico {
         return filterLivro(livroRepositorio.findById(id).orElse(null));
     }
 
-    public void save(Livro object) {
-        livroRepositorio.save(object);
+    public void save(LivroDTO object) {
+        Livro livro = new Livro();
+        BeanUtils.copyProperties(object, livro);
+        livroRepositorio.save(livro);
     }
 
 
-    public void delete(Livro object) {
-        livroRepositorio.delete(object);
+    public void delete(LivroDTO object) {
+        Livro livro = new Livro();
+        BeanUtils.copyProperties(object, livro);
+        livroRepositorio.delete(livro);
     }
 
     public void deleteById(Long id) {
@@ -50,10 +55,7 @@ public class LivroServico {
     public void update(LivroDTO object) {
         Livro livro = new Livro();
 
-        livro.setId(object.getId());
-        livro.setNome(object.getNome());
-        livro.setIsbn(object.getIsbn());
-        livro.setAutores(object.getAutores());
+        BeanUtils.copyProperties(object, livro);
 
         livroRepositorio.save(livro);
     }
@@ -61,11 +63,9 @@ public class LivroServico {
     private LivroDTO filterLivro(Livro livro){
         Set<Autor> autoresFiltrados = new HashSet<>();
         LivroDTO livroDTO = new LivroDTO();
-        livroDTO.setId(livro.getId());
-        livroDTO.setIsbn(livro.getIsbn());
-        livroDTO.setNome(livro.getNome());
+        BeanUtils.copyProperties(livro, livroDTO);
 
-        for(Autor autor : livro.getAutores()){
+        for(Autor autor : livroDTO.getAutores()){
             autoresFiltrados.add(filterSetAutores(autor));
         }
         livroDTO.setAutores(autoresFiltrados);

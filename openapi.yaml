@@ -1,0 +1,188 @@
+openapi: 3.0.0
+
+info:
+  title: "API Gerenciamento de biblioteca"
+  version: "1.0.0"
+  
+components:
+  parameters:
+    ID:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+  schemas:
+    Autor:
+      type: object
+      properties:
+        nome:
+          type: string
+        livros:
+          type: array
+          items:
+            $ref: "#/components/schemas/Livro"
+    Autores:
+      type: object
+      properties:
+        autores:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Autor"
+    Livro:
+      type: object
+      properties:
+        nome: 
+          type: string
+        isbn:
+          type: string
+        autores:
+          type: array
+          items:
+            $ref: "#/components/schemas/Autor"
+    Livros:
+      type: object
+      properties:
+        livros:
+          type: array
+          items:
+            $ref: "#/components/schemas/Livro"
+
+  
+paths:
+  /autor:
+    post:
+      summary: Cria um autor
+      description: Cria um autor através de um ResponseBody em JSON
+      parameters:
+        - name: Autor
+          in: body
+          required: true
+          schema:
+            $ref: "#/components/schemas/Autor"
+      responses:
+        201: 
+          description: Deu certo, criado
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+        401:
+          description: Deu errado, parabens
+    get:
+      summary: Retorna lista de autores
+      description: Retorna um conjunto de todos os autores registrados na database
+      responses:
+        200: 
+          description: Deu certo, retornado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autores"
+    put:
+      summary: Atualiza autor
+      description: Atualiza um autor com base em um id
+      responses:
+        201: 
+          description: Deu certo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+    delete:
+      summary: Apaga um autor
+      description: Apaga um autor baseado em um ResponseBody em JSON
+      responses:
+        200:
+          description: Deu certo, apagado
+
+  /autor/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ID'
+    get:
+      summary: Retorna um autor
+      description: Retorna um autor baseado em um id passado por parâmetro
+      responses:
+        200:
+          description: Deu certo, retornado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+    delete:
+      summary: Apaga um autor
+      description:  Apaga um autor com base no id passado
+      responses:
+        204:
+          description: Deu certo, apagado
+          
+  /autor/{id}/livros:
+    parameters:
+      - $ref: '#/components/parameters/ID'
+    get:
+      summary: Retorna livros do autor
+      description: Retorna um conjunto de todos os livros de um autor, especificado por id
+      responses:
+        200:
+          description: Deu certo, retornado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livros"
+  
+  /livro:
+    post:
+      summary: Cria um livro
+      description: Cria um livro através de um ResponseBody em JSON
+      responses:
+        201:
+          description: Deu certo, criado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+    get:
+      summary: Retorna lista de livros
+      description: Retorna um conjunto de todos os livros registrados na database
+      responses:
+        200:
+          description: Deu certo, retornado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livros"
+    put:
+      summary: Atualiza livro
+      description: Atualiza um livro com base em um id
+      responses:
+        201: 
+          description: Deu certo, atualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+    delete:
+      summary: Apaga um livro
+      description: Apaga um livro baseado em um ResponseBody em JSON
+      responses:
+        204:
+          description: Deu certo, apagado
+  /livro/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ID'
+    get:
+      summary: Retorna um livro
+      description: Retorna um livro baseado em um id passado por parâmetro
+      responses:
+        200:
+          description: Deu certo, retornado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+    delete:
+      summary: Apaga um livro
+      description:  Apaga um livro com base no id passado
+      responses:
+        204:
+          description: Deu certo, apagado
