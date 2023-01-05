@@ -1,15 +1,21 @@
 package br.com.bibliotecaspring.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     private Long Id;
     private String nome;
     private String isbn;
@@ -17,59 +23,4 @@ public class Livro {
     @JoinTable(name = "autores_livros", joinColumns = @JoinColumn(name = "livro_id"),
                                         inverseJoinColumns = @JoinColumn(name = "autor_id"))
     private Set<Autor> autores = new HashSet<>();
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public Set<Autor> getAutores() {
-        return autores;
-    }
-
-    public void setAutores(Set<Autor> autor) {
-        this.autores = autor;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Livro livro = (Livro) o;
-        return Objects.equals(Id, livro.Id) && Objects.equals(nome, livro.nome) && Objects.equals(isbn, livro.isbn) && Objects.equals(autores, livro.autores);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(Id);
-    }
-
-    @Override
-    public String toString() {
-        return "Livro{" +
-                "Id=" + Id +
-                ", nome='" + nome + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", autor=" + autores +
-                '}';
-    }
 }
