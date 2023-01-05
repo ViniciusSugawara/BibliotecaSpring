@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-public class AutorController implements IController<AutorDTO, AutorLivrosSemAutoresDTO, Long> {
+public class AutorController implements IController<AutorDTO, AutorLivrosSemAutoresDTO> {
     private IServico servico;
 
     public AutorController(@Qualifier("Autor") IServico servico){

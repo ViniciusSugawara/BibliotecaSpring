@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class LivroController implements IController<LivroDTO, LivroAutoresSemLivrosDTO, Long> {
+public class LivroController implements IController<LivroDTO, LivroAutoresSemLivrosDTO> {
     private IServico servico;
     public LivroController(@Qualifier("Livro") IServico servico){
         this.servico = servico;
