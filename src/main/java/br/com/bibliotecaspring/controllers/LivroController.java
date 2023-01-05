@@ -1,6 +1,8 @@
 package br.com.bibliotecaspring.controllers;
 
-import br.com.bibliotecaspring.dto.LivroDTO;
+import br.com.bibliotecaspring.dto.inputs.LivroDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroAutoresSemLivrosDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.LivroServico;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,12 @@ public class LivroController {
     }
 
     @GetMapping("/livros")
-    public ResponseEntity<List<LivroDTO>> findAll(){
+    public ResponseEntity<List<LivroAutoresSemLivrosDTO>> findAll(){
         return new ResponseEntity<>(livroServico.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/livro/{id}")
-    public ResponseEntity<LivroDTO> findById(@PathVariable("id") Long id){
+    public ResponseEntity<LivroAutoresSemLivrosDTO> findById(@PathVariable("id") Long id){
         return new ResponseEntity(livroServico.findById(id), HttpStatus.OK);
     }
 

@@ -1,8 +1,9 @@
 package br.com.bibliotecaspring.controllers;
 
-import br.com.bibliotecaspring.dto.AutorDTO;
+import br.com.bibliotecaspring.dto.inputs.AutorDTO;
+import br.com.bibliotecaspring.dto.outputs.AutorLivrosSemAutoresDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
 import br.com.bibliotecaspring.models.Autor;
-import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.servicos.AutorServico;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +21,16 @@ public class AutorController {
     }
 
     @GetMapping("/autores")
-    public ResponseEntity<List<AutorDTO>> findAll(){
+    public ResponseEntity<List<AutorLivrosSemAutoresDTO>> findAll(){
         return new ResponseEntity<>(autorServico.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/autor/{id}")
-    public ResponseEntity<AutorDTO> findById(@PathVariable("id") Long id){
+    public ResponseEntity<AutorLivrosSemAutoresDTO> findById(@PathVariable("id") Long id){
         return new ResponseEntity<>(autorServico.findById(id), HttpStatus.OK);
     }
     @GetMapping("/autor/{id}/livros")
-    public Set<Livro> findAllLivrosById(@PathVariable("id") Long id){ return autorServico.findAllLivrosById(id);}
+    public Set<LivroSemAutoresDTO> findAllLivrosById(@PathVariable("id") Long id){ return autorServico.findAllLivrosById(id);}
 
     @GetMapping("/autor/returnMock")
     public Autor retornaAutor(){
