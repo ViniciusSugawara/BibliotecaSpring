@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Qualifier("Autor")
 @Service
-public class AutorServico {
+public class AutorServico implements IServico<AutorDTO, AutorLivrosSemAutoresDTO, Long> {
     private AutorRepositorio autorRepositorio;
     private ModelMapper modelMapper = new ModelMapper();
     public AutorServico(AutorRepositorio autorRepositorio){
@@ -43,8 +43,9 @@ public class AutorServico {
         return livroSemAutoresSet;
     }
 
-    public void save(AutorDTO object) {
+    public AutorDTO save(AutorDTO object) {
         autorRepositorio.save(this.modelMapper.map(object, Autor.class));
+        return object;
     }
 
     public void delete(AutorDTO object) {
@@ -55,7 +56,8 @@ public class AutorServico {
         autorRepositorio.deleteById(id);
     }
 
-    public void update(AutorDTO object) {
+    public AutorDTO update(AutorDTO object) {
         autorRepositorio.save(this.modelMapper.map(object, Autor.class));
+        return object;
     }
 }

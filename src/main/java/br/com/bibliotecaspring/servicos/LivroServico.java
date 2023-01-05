@@ -1,26 +1,19 @@
 package br.com.bibliotecaspring.servicos;
 
 import br.com.bibliotecaspring.dto.inputs.LivroDTO;
-import br.com.bibliotecaspring.dto.outputs.AutorLivrosSemAutoresDTO;
-import br.com.bibliotecaspring.dto.outputs.AutorSemLivrosDTO;
 import br.com.bibliotecaspring.dto.outputs.LivroAutoresSemLivrosDTO;
-import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
-import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.LivroRepositorio;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Qualifier("Livro")
 @Service
-public class LivroServico {
+public class LivroServico implements IServico<LivroDTO, LivroAutoresSemLivrosDTO, Long> {
     private LivroRepositorio livroRepositorio;
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -41,8 +34,9 @@ public class LivroServico {
         return this.modelMapper.map(livroRepositorio.findById(id).orElse(null), LivroAutoresSemLivrosDTO.class);
     }
 
-    public void save(LivroDTO object) {
+    public LivroDTO save(LivroDTO object) {
         livroRepositorio.save(this.modelMapper.map(object, Livro.class));
+        return object;
     }
 
     public void delete(LivroDTO object) {
@@ -53,7 +47,8 @@ public class LivroServico {
         livroRepositorio.deleteById(id);
     }
 
-    public void update(LivroDTO object) {
+    public LivroDTO update(LivroDTO object) {
         livroRepositorio.save(this.modelMapper.map(object, Livro.class));
+        return object;
     }
 }
