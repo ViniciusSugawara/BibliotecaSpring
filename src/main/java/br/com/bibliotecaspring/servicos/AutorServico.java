@@ -36,11 +36,7 @@ public class AutorServico implements IServico<AutorDTO, AutorLivrosSemAutoresDTO
     }
 
     public Set<LivroSemAutoresDTO> findAllLivrosById(Long id){
-        Set<LivroSemAutoresDTO> livroSemAutoresSet = new HashSet<>();
-        for(Livro livro : autorRepositorio.findById(id).orElse(null).getLivros()){
-            livroSemAutoresSet.add(this.modelMapper.map(livro, LivroSemAutoresDTO.class));
-        }
-        return livroSemAutoresSet;
+        return this.modelMapper.map(autorRepositorio.findById(id).orElse(null), AutorLivrosSemAutoresDTO.class).getLivros();
     }
 
     public AutorDTO save(AutorDTO object) {

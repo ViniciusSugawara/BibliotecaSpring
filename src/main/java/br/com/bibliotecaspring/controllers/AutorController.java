@@ -4,7 +4,7 @@ import br.com.bibliotecaspring.dto.inputs.AutorDTO;
 import br.com.bibliotecaspring.dto.outputs.AutorLivrosSemAutoresDTO;
 import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
 import br.com.bibliotecaspring.models.Autor;
-import br.com.bibliotecaspring.servicos.IServico;
+import br.com.bibliotecaspring.servicos.AutorServico;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import java.util.Set;
 
 @RestController
 public class AutorController implements IController<AutorDTO, AutorLivrosSemAutoresDTO> {
-    private IServico servico;
+    private AutorServico servico;
 
-    public AutorController(@Qualifier("Autor") IServico servico){
+    public AutorController(@Qualifier("Autor") AutorServico servico){
         this.servico = servico;
     }
 
@@ -34,8 +34,7 @@ public class AutorController implements IController<AutorDTO, AutorLivrosSemAuto
     }
     @GetMapping("/autor/{id}/livros")
     public Set<LivroSemAutoresDTO> findAllLivrosById(@PathVariable("id") Long id){
-        AutorLivrosSemAutoresDTO autorTeste = (AutorLivrosSemAutoresDTO) servico.findById(id);
-        return autorTeste.getLivros();
+        return servico.findAllLivrosById(id);
     }
 
     @GetMapping("/autor/returnMock")
