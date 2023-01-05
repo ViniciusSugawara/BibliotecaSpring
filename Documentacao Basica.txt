@@ -34,7 +34,7 @@ Requerimentos do sistema:
 	 > Método excluirAutor(); // método delete
 	 > Método adicionarLivros(); // metodo update
 	 
-	> Pede-se gerenciamento de livros (CRUD, com autores cadastrados apenas.)
+	> Pede-se gerenciamento de livros (CRUD)
 	 > Método adicionarLivro(); // método save
 	 > Método atualizarLivro(); // método update
 	 > Método excluirLivro(); // método delete

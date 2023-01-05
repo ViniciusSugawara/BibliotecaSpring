@@ -84,7 +84,7 @@ paths:
       description: Atualiza um autor com base em um id
       responses:
         201: 
-          description: Deu certo
+          description: Deu certo, autor inserido
           content:
             application/json:
               schema:
@@ -113,7 +113,7 @@ paths:
       summary: Apaga um autor
       description:  Apaga um autor com base no id passado
       responses:
-        204:
+        200:
           description: Deu certo, apagado
           
   /autor/{id}/livros:
