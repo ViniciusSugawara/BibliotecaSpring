@@ -1,9 +1,14 @@
 package br.com.bibliotecaspring.servicos;
 
-import br.com.bibliotecaspring.dto.LivroDTO;
+import br.com.bibliotecaspring.dto.inputs.LivroDTO;
+import br.com.bibliotecaspring.dto.outputs.AutorLivrosSemAutoresDTO;
+import br.com.bibliotecaspring.dto.outputs.AutorSemLivrosDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroAutoresSemLivrosDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.LivroRepositorio;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,35 +22,31 @@ import java.util.Set;
 @Service
 public class LivroServico {
     private LivroRepositorio livroRepositorio;
+    private ModelMapper modelMapper = new ModelMapper();
 
     public LivroServico(LivroRepositorio livroRepositorio){
         this.livroRepositorio = livroRepositorio;
     }
 
-    public List<LivroDTO> findAll() {
-        List<LivroDTO> listaFiltrada = new ArrayList<>();
+    public List<LivroAutoresSemLivrosDTO> findAll() {
+        List<LivroAutoresSemLivrosDTO> listaFiltrada = new ArrayList<>();
         for(Livro livro : livroRepositorio.findAll()){
-            listaFiltrada.add(filterLivro(livro));
+            listaFiltrada.add(this.modelMapper.map(livro, LivroAutoresSemLivrosDTO.class));
         }
         return listaFiltrada;
     }
 
 
-    public LivroDTO findById(Long id) {
-        return filterLivro(livroRepositorio.findById(id).orElse(null));
+    public LivroAutoresSemLivrosDTO findById(Long id) {
+        return this.modelMapper.map(livroRepositorio.findById(id).orElse(null), LivroAutoresSemLivrosDTO.class);
     }
 
     public void save(LivroDTO object) {
-        Livro livro = new Livro();
-        BeanUtils.copyProperties(object, livro);
-        livroRepositorio.save(livro);
+        livroRepositorio.save(this.modelMapper.map(object, Livro.class));
     }
 
-
     public void delete(LivroDTO object) {
-        Livro livro = new Livro();
-        BeanUtils.copyProperties(object, livro);
-        livroRepositorio.delete(livro);
+        livroRepositorio.delete(this.modelMapper.map(object, Livro.class));
     }
 
     public void deleteById(Long id) {
@@ -53,28 +54,6 @@ public class LivroServico {
     }
 
     public void update(LivroDTO object) {
-        Livro livro = new Livro();
-
-        BeanUtils.copyProperties(object, livro);
-
-        livroRepositorio.save(livro);
-    }
-
-    private LivroDTO filterLivro(Livro livro){
-        Set<Autor> autoresFiltrados = new HashSet<>();
-        LivroDTO livroDTO = new LivroDTO();
-        BeanUtils.copyProperties(livro, livroDTO);
-
-        for(Autor autor : livroDTO.getAutores()){
-            autoresFiltrados.add(filterSetAutores(autor));
-        }
-        livroDTO.setAutores(autoresFiltrados);
-        return livroDTO;
-    }
-    private Autor filterSetAutores(Autor autor){
-        Autor autorPrototipo = new Autor();
-        autorPrototipo.setId(autor.getId());
-        autorPrototipo.setNome(autor.getNome());
-        return autorPrototipo;
+        livroRepositorio.save(this.modelMapper.map(object, Livro.class));
     }
 }

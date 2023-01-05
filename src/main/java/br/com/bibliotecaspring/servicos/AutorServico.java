@@ -1,11 +1,12 @@
 package br.com.bibliotecaspring.servicos;
 
-import br.com.bibliotecaspring.dto.AutorDTO;
-import br.com.bibliotecaspring.dto.LivroDTO;
+import br.com.bibliotecaspring.dto.inputs.AutorDTO;
+import br.com.bibliotecaspring.dto.outputs.AutorLivrosSemAutoresDTO;
+import br.com.bibliotecaspring.dto.outputs.LivroSemAutoresDTO;
 import br.com.bibliotecaspring.models.Autor;
 import br.com.bibliotecaspring.models.Livro;
 import br.com.bibliotecaspring.repositorios.AutorRepositorio;
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -18,79 +19,43 @@ import java.util.Set;
 @Service
 public class AutorServico {
     private AutorRepositorio autorRepositorio;
+    private ModelMapper modelMapper = new ModelMapper();
     public AutorServico(AutorRepositorio autorRepositorio){
         this.autorRepositorio = autorRepositorio;
     }
-    public List<AutorDTO> findAll() {
-        List<AutorDTO> listaFiltrada = new ArrayList<>();
+    public List<AutorLivrosSemAutoresDTO> findAll() {
+        List<AutorLivrosSemAutoresDTO> listaFiltrada = new ArrayList<>();
         for(Autor autor : autorRepositorio.findAll()){
-            listaFiltrada.add(filterAutor(autor));
+            listaFiltrada.add(this.modelMapper.map(autor, AutorLivrosSemAutoresDTO.class));
         }
         return listaFiltrada;
     }
 
-    public AutorDTO findById(Long id) {
-        return filterAutor(autorRepositorio.findById(id).orElse(null));
+    public AutorLivrosSemAutoresDTO findById(Long id) {
+        return this.modelMapper.map(autorRepositorio.findById(id).orElse(null), AutorLivrosSemAutoresDTO.class);
     }
 
-    public Set<Livro> findAllLivrosById(Long id){
-        Autor autor = autorRepositorio.findById(id).orElse(null);
-        Set<Livro> livrosFiltrados = new HashSet<>();
-        for(Livro livro : autor.getLivros()){
-            livrosFiltrados.add(filterSetLivros(livro));
+    public Set<LivroSemAutoresDTO> findAllLivrosById(Long id){
+        Set<LivroSemAutoresDTO> livroSemAutoresSet = new HashSet<>();
+        for(Livro livro : autorRepositorio.findById(id).orElse(null).getLivros()){
+            livroSemAutoresSet.add(this.modelMapper.map(livro, LivroSemAutoresDTO.class));
         }
-        return livrosFiltrados;
+        return livroSemAutoresSet;
     }
 
     public void save(AutorDTO object) {
-        Autor autor = new Autor();
-        BeanUtils.copyProperties(object, autor);
-
-        autorRepositorio.save(autor);
+        autorRepositorio.save(this.modelMapper.map(object, Autor.class));
     }
-
 
     public void delete(AutorDTO object) {
-        Autor autor = new Autor();
-        BeanUtils.copyProperties(object, autor);
-
-        autorRepositorio.delete(autor);
+        autorRepositorio.delete(this.modelMapper.map(object, Autor.class));
     }
-
 
     public void deleteById(Long id) {
         autorRepositorio.deleteById(id);
     }
 
-
     public void update(AutorDTO object) {
-        Autor autor = new Autor();
-
-        autor.setId(object.getId());
-        autor.setNome(object.getNome());
-        autor.setLivros(object.getLivros());
-
-        autorRepositorio.save(autor);
-    }
-
-    private AutorDTO filterAutor(Autor autor){
-        Set<Livro> livrosFiltrados = new HashSet<>();
-        AutorDTO autorDTO = new AutorDTO();
-        BeanUtils.copyProperties(autor, autorDTO);
-
-        for(Livro livro : autor.getLivros()){
-            livrosFiltrados.add(filterSetLivros(livro));
-        }
-        autorDTO.setLivros(livrosFiltrados);
-        return autorDTO;
-    }
-    // Metodo criado para que nao seja retornado um conjunto redundante de autor, que eh lido dentro do JSON
-    // causando erro de stack overflow.
-    private Livro filterSetLivros(Livro livro){
-        Livro livroPrototipo = new Livro();
-        livroPrototipo.setId(livro.getId());
-        livroPrototipo.setNome(livro.getNome());
-        livroPrototipo.setIsbn(livro.getIsbn());
-        return livroPrototipo;
+        autorRepositorio.save(this.modelMapper.map(object, Autor.class));
     }
 }
